@@ -1,11 +1,11 @@
 import java.util.Scanner;
 public class OxygenLevel {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner s = new Scanner(System.in);
         int[] oxygen = new int[9];
         boolean invalid = false;
         for (int i = 0; i < 9; i++) {
-            oxygen[i] = sc.nextInt();
+            oxygen[i] = s.nextInt();
             if (oxygen[i] < 1 || oxygen[i] > 100) {
                 invalid = true;
                 break;
