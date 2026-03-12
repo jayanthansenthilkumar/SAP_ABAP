@@ -1,18 +1,20 @@
-@EndUserText.label : 'Enrollment Draft Table'
+@EndUserText.label : 'User Login Portal Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zenrollments_d {
+define table zusers_d {
 
   key client         : abap.clnt not null;
-  key enrollment_id  : sysuuid_x16 not null;
-  student_id         : sysuuid_x16 not null;
-  course_id          : sysuuid_x16;
-  semester_id        : sysuuid_x16;
-  enrollment_date    : abap.dats;
-  grade              : abap.char(2);
-  status             : abap.char(1);
+  key user_id        : sysuuid_x16 not null;
+  username           : abap.char(50);
+  email              : abap.char(100);
+  role               : abap.char(10);
+  display_name       : abap.char(100);
+  is_active          : abap_boolean;
+  last_login_at      : timestampl;
+  student_id         : sysuuid_x16;
+  professor_id       : sysuuid_x16;
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

@@ -3,13 +3,16 @@
 define root view entity ZI_COURSE
   as select from zcourses
   association [0..1] to ZI_DEPARTMENT as _Department on $projection.DepartmentId = _Department.DeptId
+  association [0..1] to ZI_PROFESSOR  as _Professor  on $projection.ProfessorId  = _Professor.ProfId
 {
   key course_id        as CourseId,
       course_code      as CourseCode,
       title            as Title,
       credits          as Credits,
       description      as Description,
+      max_students     as MaxStudents,
       department_id    as DepartmentId,
+      professor_id     as ProfessorId,
 
       @Semantics.user.createdBy: true
       created_by       as CreatedBy,
@@ -26,5 +29,6 @@ define root view entity ZI_COURSE
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       local_last_changed as LocalLastChanged,
 
-      _Department
+      _Department,
+      _Professor
 }

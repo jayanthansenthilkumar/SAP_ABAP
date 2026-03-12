@@ -1,0 +1,9 @@
+ID,username,email,role,displayName,isActive,lastLoginAt,student_ID,professor_ID
+cc30e1f0-0001-4000-8000-000000000001,admin,admin@university.edu,ADMIN,System Administrator,true,2025-06-01T08:00:00Z,,
+cc30e1f0-0002-4000-8000-000000000002,rahul.sharma,rahul.sharma@university.edu,STUD,Rahul Sharma,true,2025-05-28T09:30:00Z,53c0e1f0-0001-4000-8000-000000000001,
+cc30e1f0-0003-4000-8000-000000000003,priya.patel,priya.patel@university.edu,STUD,Priya Patel,true,2025-05-27T14:15:00Z,53c0e1f0-0002-4000-8000-000000000002,
+cc30e1f0-0004-4000-8000-000000000004,amit.kumar,amit.kumar@university.edu,STUD,Amit Kumar,false,2025-01-15T11:00:00Z,53c0e1f0-0003-4000-8000-000000000003,
+cc30e1f0-0005-4000-8000-000000000005,rajesh.verma,rajesh.verma@university.edu,PROF,Dr. Rajesh Verma,true,2025-06-01T07:45:00Z,,f6a0e1f0-0001-4000-8000-000000000001
+cc30e1f0-0006-4000-8000-000000000006,anita.desai,anita.desai@university.edu,PROF,Dr. Anita Desai,true,2025-05-30T10:20:00Z,,f6a0e1f0-0002-4000-8000-000000000002
+cc30e1f0-0007-4000-8000-000000000007,vikram.singh,vikram.singh@university.edu,PROF,Dr. Vikram Singh,true,2025-05-29T16:00:00Z,,f6a0e1f0-0003-4000-8000-000000000003
+cc30e1f0-0008-4000-8000-000000000008,meera.nair,meera.nair@university.edu,PROF,Dr. Meera Nair,true,2025-05-31T13:10:00Z,,f6a0e1f0-0004-4000-8000-000000000004

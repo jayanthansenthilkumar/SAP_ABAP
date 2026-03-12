@@ -1,18 +1,17 @@
-@EndUserText.label : 'Enrollment Draft Table'
+@EndUserText.label : 'Semester Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zenrollments_d {
+define table zsemesters_d {
 
   key client         : abap.clnt not null;
-  key enrollment_id  : sysuuid_x16 not null;
-  student_id         : sysuuid_x16 not null;
-  course_id          : sysuuid_x16;
-  semester_id        : sysuuid_x16;
-  enrollment_date    : abap.dats;
-  grade              : abap.char(2);
-  status             : abap.char(1);
+  key sem_id         : sysuuid_x16 not null;
+  code               : abap.char(15);
+  name               : abap.char(50);
+  start_date         : abap.dats;
+  end_date           : abap.dats;
+  is_current         : abap_boolean;
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

@@ -7,6 +7,7 @@ define view entity ZC_ENROLLMENT
   key EnrollmentId,
       StudentId,
       CourseId,
+      SemesterId,
       EnrollmentDate,
       Grade,
       Status,
@@ -18,5 +19,6 @@ define view entity ZC_ENROLLMENT
       LocalLastChanged,
 
       _Student : redirected to parent ZC_STUDENT,
-      _Course
+      _Course,
+      _Semester
 }

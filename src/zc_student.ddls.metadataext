@@ -41,6 +41,14 @@ annotate entity ZC_STUDENT with
       targetElement: '_Enrollment'
     },
     {
+      id: 'ExamResults',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Exam Results',
+      position: 27,
+      targetElement: '_ExamResult'
+    },
+    {
       id: 'AdminInfo',
       purpose: #STANDARD,
       type: #FIELDGROUP_REFERENCE,

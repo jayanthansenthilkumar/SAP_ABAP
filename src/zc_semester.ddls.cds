@@ -1,32 +1,27 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Course Projection View'
+@EndUserText.label: 'Semester Projection View'
 @Metadata.allowExtensions: true
 @Search.searchable: true
-define root view entity ZC_COURSE
+define root view entity ZC_SEMESTER
   provider contract transactional_query
-  as projection on ZI_COURSE
+  as projection on ZI_SEMESTER
 {
-  key CourseId,
+  key SemId,
 
       @Search.defaultSearchElement: true
-      CourseCode,
+      Code,
 
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.8
-      Title,
+      Name,
 
-      Credits,
-      Description,
-      MaxStudents,
-      DepartmentId,
-      ProfessorId,
+      StartDate,
+      EndDate,
+      IsCurrent,
 
       CreatedBy,
       CreatedAt,
       LastChangedBy,
       LastChangedAt,
-      LocalLastChanged,
-
-      _Department,
-      _Professor
+      LocalLastChanged
 }

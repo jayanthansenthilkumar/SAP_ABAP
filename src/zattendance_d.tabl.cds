@@ -1,18 +1,18 @@
-@EndUserText.label : 'Enrollment Draft Table'
+@EndUserText.label : 'Attendance Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zenrollments_d {
+define table zattendance_d {
 
   key client         : abap.clnt not null;
-  key enrollment_id  : sysuuid_x16 not null;
-  student_id         : sysuuid_x16 not null;
+  key attend_id      : sysuuid_x16 not null;
+  student_id         : sysuuid_x16;
   course_id          : sysuuid_x16;
   semester_id        : sysuuid_x16;
-  enrollment_date    : abap.dats;
-  grade              : abap.char(2);
+  attendance_date    : abap.dats;
   status             : abap.char(1);
+  remarks            : abap.char(200);
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

@@ -26,6 +26,7 @@ etag master LocalLastChanged
 
   association _Address    { create; }
   association _Enrollment { create; }
+  association _ExamResult { create; }
 
   draft action Edit;
   draft action Activate optimized;
@@ -123,9 +124,49 @@ etag master LocalLastChanged
     EnrollmentId     = enrollment_id;
     StudentId        = student_id;
     CourseId         = course_id;
+    SemesterId       = semester_id;
     EnrollmentDate   = enrollment_date;
     Grade            = grade;
     Status           = status;
+    CreatedBy        = created_by;
+    CreatedAt        = created_at;
+    LastChangedBy    = last_changed_by;
+    LastChangedAt    = last_changed_at;
+    LocalLastChanged = local_last_changed;
+  }
+}
+
+define behavior for ZI_EXAMRESULT alias ExamResult
+persistent table zexamresults
+draft table zexamresults_d
+lock dependent by _Student
+authorization dependent by _Student
+etag master LocalLastChanged
+{
+  field ( readonly )
+    ResultId,
+    StudentId;
+
+  field ( numbering : managed )
+    ResultId;
+
+  update;
+  delete;
+
+  association _Student;
+
+  mapping for zexamresults corresponding
+  {
+    ResultId         = result_id;
+    StudentId        = student_id;
+    ExamScheduleId   = exam_schedule_id;
+    MarksObtained    = marks_obtained;
+    Grade            = grade;
+    IsPassed         = is_passed;
+    Remarks          = remarks;
+    ResultStatus     = result_status;
+    PublishedAt      = published_at;
+    PublishedBy      = published_by;
     CreatedBy        = created_by;
     CreatedAt        = created_at;
     LastChangedBy    = last_changed_by;

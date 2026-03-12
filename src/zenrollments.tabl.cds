@@ -9,6 +9,7 @@ define table zenrollments {
   key enrollment_id  : sysuuid_x16 not null;
   student_id         : sysuuid_x16 not null;
   course_id          : sysuuid_x16;
+  semester_id        : sysuuid_x16;
   enrollment_date    : abap.dats;
   grade              : abap.char(2);
   status             : abap.char(1);

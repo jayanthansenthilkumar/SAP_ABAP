@@ -1,18 +1,18 @@
-@EndUserText.label : 'Enrollment Draft Table'
+@EndUserText.label : 'Professor Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zenrollments_d {
+define table zprofessors_d {
 
   key client         : abap.clnt not null;
-  key enrollment_id  : sysuuid_x16 not null;
-  student_id         : sysuuid_x16 not null;
-  course_id          : sysuuid_x16;
-  semester_id        : sysuuid_x16;
-  enrollment_date    : abap.dats;
-  grade              : abap.char(2);
-  status             : abap.char(1);
+  key prof_id        : sysuuid_x16 not null;
+  name               : abap.char(100);
+  employee_id        : abap.char(20);
+  email              : abap.char(100);
+  phone              : abap.char(15);
+  specialization     : abap.char(200);
+  department_id      : sysuuid_x16;
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

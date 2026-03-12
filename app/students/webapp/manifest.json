@@ -63,6 +63,11 @@
                     "pattern": "Students({key})/enrollments({key2}):?query:",
                     "name": "EnrollmentObjectPage",
                     "target": "EnrollmentObjectPage"
+                },
+                {
+                    "pattern": "Students({key})/examResults({key2}):?query:",
+                    "name": "ExamResultObjectPage",
+                    "target": "ExamResultObjectPage"
                 }
             ],
             "targets": {
@@ -103,6 +108,11 @@
                                     "detail": {
                                         "route": "EnrollmentObjectPage"
                                     }
+                                },
+                                "examResults": {
+                                    "detail": {
+                                        "route": "ExamResultObjectPage"
+                                    }
                                 }
                             }
                         }
@@ -126,6 +136,17 @@
                     "options": {
                         "settings": {
                             "contextPath": "/Students/enrollments",
+                            "editableHeaderContent": false
+                        }
+                    }
+                },
+                "ExamResultObjectPage": {
+                    "type": "Component",
+                    "id": "ExamResultObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Students/examResults",
                             "editableHeaderContent": false
                         }
                     }

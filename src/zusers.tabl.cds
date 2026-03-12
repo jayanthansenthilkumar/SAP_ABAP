@@ -1,24 +1,24 @@
-@EndUserText.label : 'Course Draft Table'
+@EndUserText.label : 'User Login Portal Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zcourses_d {
+define table zusers {
 
   key client         : abap.clnt not null;
-  key course_id      : sysuuid_x16 not null;
-  course_code        : abap.char(15);
-  title              : abap.char(150);
-  credits            : abap.int4;
-  description        : abap.char(500);
-  max_students       : abap.int4;
-  department_id      : sysuuid_x16;
+  key user_id        : sysuuid_x16 not null;
+  username           : abap.char(50);
+  email              : abap.char(100);
+  role               : abap.char(10);
+  display_name       : abap.char(100);
+  is_active          : abap_boolean;
+  last_login_at      : timestampl;
+  student_id         : sysuuid_x16;
   professor_id       : sysuuid_x16;
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;
   last_changed_at    : timestampl;
   local_last_changed : timestampl;
-  "%admin"           : include sych_bdl_draft_admin_inc;
 
 }

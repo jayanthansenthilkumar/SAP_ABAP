@@ -1,24 +1,25 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Course Projection View'
+@EndUserText.label: 'User Login Portal Projection View'
 @Metadata.allowExtensions: true
 @Search.searchable: true
-define root view entity ZC_COURSE
+define root view entity ZC_USER
   provider contract transactional_query
-  as projection on ZI_COURSE
+  as projection on ZI_USER
 {
-  key CourseId,
-
-      @Search.defaultSearchElement: true
-      CourseCode,
+  key UserId,
 
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.8
-      Title,
+      Username,
 
-      Credits,
-      Description,
-      MaxStudents,
-      DepartmentId,
+      @Search.defaultSearchElement: true
+      Email,
+
+      Role,
+      DisplayName,
+      IsActive,
+      LastLoginAt,
+      StudentId,
       ProfessorId,
 
       CreatedBy,
@@ -27,6 +28,6 @@ define root view entity ZC_COURSE
       LastChangedAt,
       LocalLastChanged,
 
-      _Department,
+      _Student,
       _Professor
 }

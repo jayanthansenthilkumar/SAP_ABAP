@@ -1,27 +1,25 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Student Projection View'
+@EndUserText.label: 'Professor Projection View'
 @Metadata.allowExtensions: true
 @Search.searchable: true
-define root view entity ZC_STUDENT
+define root view entity ZC_PROFESSOR
   provider contract transactional_query
-  as projection on ZI_STUDENT
+  as projection on ZI_PROFESSOR
 {
-  key Sid,
+  key ProfId,
 
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.8
       Name,
 
       @Search.defaultSearchElement: true
-      @Search.fuzzinessThreshold: 0.8
-      Regno,
+      EmployeeId,
 
       @Search.defaultSearchElement: true
       Email,
 
       Phone,
-      DateOfBirth,
-      Status,
+      Specialization,
       DepartmentId,
 
       CreatedBy,
@@ -30,9 +28,5 @@ define root view entity ZC_STUDENT
       LastChangedAt,
       LocalLastChanged,
 
-      /* Associations */
-      _Department,
-      _Address    : redirected to composition child ZC_ADDRESS,
-      _Enrollment : redirected to composition child ZC_ENROLLMENT,
-      _ExamResult : redirected to composition child ZC_EXAMRESULT
+      _Department
 }

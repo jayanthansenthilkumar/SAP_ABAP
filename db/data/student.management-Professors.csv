@@ -1,0 +1,7 @@
+ID,name,employeeId,email,phone,specialization,department_ID
+f6a0e1f0-0001-4000-8000-000000000001,Dr. Rajesh Verma,EMP001,rajesh.verma@university.edu,9800000001,Artificial Intelligence & Machine Learning,d1a0e1f0-0001-4000-8000-000000000001
+f6a0e1f0-0002-4000-8000-000000000002,Dr. Anita Desai,EMP002,anita.desai@university.edu,9800000002,Database Systems & Cloud Computing,d1a0e1f0-0001-4000-8000-000000000001
+f6a0e1f0-0003-4000-8000-000000000003,Dr. Vikram Singh,EMP003,vikram.singh@university.edu,9800000003,Robotics & Automation,d1a0e1f0-0002-4000-8000-000000000002
+f6a0e1f0-0004-4000-8000-000000000004,Dr. Meera Nair,EMP004,meera.nair@university.edu,9800000004,Power Systems & VLSI Design,d1a0e1f0-0003-4000-8000-000000000003
+f6a0e1f0-0005-4000-8000-000000000005,Dr. Sanjay Gupta,EMP005,sanjay.gupta@university.edu,9800000005,Strategic Management & Marketing,d1a0e1f0-0004-4000-8000-000000000004
+f6a0e1f0-0006-4000-8000-000000000006,Dr. Kavita Rao,EMP006,kavita.rao@university.edu,9800000006,Algebra & Number Theory,d1a0e1f0-0005-4000-8000-000000000005
