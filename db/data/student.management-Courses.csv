@@ -1,0 +1,11 @@
+ID,courseCode,title,credits,description,department_ID
+c2b0e1f0-0001-4000-8000-000000000001,CS101,Introduction to Programming,4,Fundamentals of programming using modern languages,d1a0e1f0-0001-4000-8000-000000000001
+c2b0e1f0-0002-4000-8000-000000000002,CS201,Data Structures & Algorithms,4,Core data structures sorting searching graphs,d1a0e1f0-0001-4000-8000-000000000001
+c2b0e1f0-0003-4000-8000-000000000003,CS301,Database Management Systems,3,Relational databases SQL normalization,d1a0e1f0-0001-4000-8000-000000000001
+c2b0e1f0-0004-4000-8000-000000000004,ME101,Engineering Mechanics,3,Statics and dynamics fundamentals,d1a0e1f0-0002-4000-8000-000000000002
+c2b0e1f0-0005-4000-8000-000000000005,ME201,Thermodynamics,4,Laws of thermodynamics heat engines cycles,d1a0e1f0-0002-4000-8000-000000000002
+c2b0e1f0-0006-4000-8000-000000000006,EE101,Circuit Theory,3,Analysis of electrical circuits,d1a0e1f0-0003-4000-8000-000000000003
+c2b0e1f0-0007-4000-8000-000000000007,EE201,Digital Electronics,4,Boolean algebra logic gates microprocessors,d1a0e1f0-0003-4000-8000-000000000003
+c2b0e1f0-0008-4000-8000-000000000008,MBA101,Principles of Management,3,Planning organizing leading controlling,d1a0e1f0-0004-4000-8000-000000000004
+c2b0e1f0-0009-4000-8000-000000000009,MATH101,Calculus I,4,Limits derivatives integrals,d1a0e1f0-0005-4000-8000-000000000005
+c2b0e1f0-000a-4000-8000-000000000010,MATH201,Linear Algebra,3,Vectors matrices linear transformations,d1a0e1f0-0005-4000-8000-000000000005

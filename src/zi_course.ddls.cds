@@ -1,21 +1,16 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Student Interface View'
-define root view entity ZI_STUDENT
-  as select from zstudentss
+@EndUserText.label: 'Course Interface View'
+define root view entity ZI_COURSE
+  as select from zcourses
   association [0..1] to ZI_DEPARTMENT as _Department on $projection.DepartmentId = _Department.DeptId
-  association [0..*] to ZI_ADDRESS     as _Address    on $projection.Sid = _Address.StudentId
-  association [0..*] to ZI_ENROLLMENT  as _Enrollment on $projection.Sid = _Enrollment.StudentId
 {
-  key sid              as Sid,
-      name             as Name,
-      regno            as Regno,
-      email            as Email,
-      phone            as Phone,
-      date_of_birth    as DateOfBirth,
-      status           as Status,
+  key course_id        as CourseId,
+      course_code      as CourseCode,
+      title            as Title,
+      credits          as Credits,
+      description      as Description,
       department_id    as DepartmentId,
 
-      -- Administrative fields
       @Semantics.user.createdBy: true
       created_by       as CreatedBy,
 
@@ -31,8 +26,5 @@ define root view entity ZI_STUDENT
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       local_last_changed as LocalLastChanged,
 
-      -- Associations
-      _Department,
-      _Address,
-      _Enrollment
+      _Department
 }

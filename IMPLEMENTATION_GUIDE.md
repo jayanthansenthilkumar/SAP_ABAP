@@ -1,157 +1,194 @@
-# Student Management System — ABAP RAP on SAP BTP
+# Student Management System — Enhanced Implementation Guide
 
-## Complete Implementation Guide
+## Complete Implementation Guide (v2.0 — Multi-Entity)
 
 ---
 
 ## Architecture
 
 ```
-ZSTUDENTSS (DB Table)  +  ZSTUDENTSS_D (Draft Table)
-        ↓
-ZI_STUDENT (Interface CDS View Entity)
-        ↓
-ZI_STUDENT (Behavior Definition — managed, draft-enabled)
-        ↓
-ZBP_I_STUDENT (Behavior Implementation Class)
-        ↓
-ZC_STUDENT (Projection CDS View Entity)
-        ↓
-ZC_STUDENT (Behavior Projection)
-        ↓
-ZC_STUDENT (Metadata Extension — Fiori UI annotations)
-        ↓
-ZUI_STUDENT (Service Definition)
-        ↓
-ZUI_STUDENT_O4 (Service Binding — OData V4 UI)
-        ↓
-Fiori Elements List Report + Object Page
+┌──────────────────────────────────────────────────────────────────┐
+│                      SAP Fiori Elements UI                       │
+│  ┌──────────────────┐    ┌──────────────────┐                    │
+│  │  Student List     │    │  Course List      │                   │
+│  │  Report + Object  │    │  Report + Object  │                   │
+│  │  Page (+ Address, │    │  Page             │                   │
+│  │  Enrollments)     │    │                   │                   │
+│  └──────┬───────────┘    └──────┬───────────┘                    │
+│         └──────────┬────────────┘                                │
+│              OData V4 Service  /student/                         │
+│  ┌─────────────────────────────────────────┐                     │
+│  │          SAP CAP Runtime                 │                    │
+│  │   Validations · Draft · Actions          │                    │
+│  └──────────────────┬──────────────────────┘                     │
+│  ┌──────────────────┴──────────────────────┐                     │
+│  │           SQLite Database                │                    │
+│  │  Departments │ Courses │ Students        │                    │
+│  │  Addresses   │ Enrollments               │                    │
+│  └──────────────────────────────────────────┘                    │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Data Model (5 Entities)
+
+| # | Entity         | Description                         | Relationship                    |
+|---|---------------|------------------------------------|---------------------------------|
+| 1 | **Departments** | Department master data            | Parent of Students & Courses    |
+| 2 | **Courses**     | Course catalog                    | Linked to Departments           |
+| 3 | **Students**    | Student records (draft-enabled)   | Belongs to Department           |
+| 4 | **Addresses**   | Student addresses                 | Composition child of Students   |
+| 5 | **Enrollments** | Student-Course enrollments        | Composition child of Students   |
+
+### Entity Relationships
+```
+Departments ─── 1:N ───> Students
+Departments ─── 1:N ───> Courses
+Students    ─── 1:N ───> Addresses    (Composition — inline edit)
+Students    ─── 1:N ───> Enrollments  (Composition — inline edit)
+Courses     <── N:1 ───  Enrollments  (Association — value help)
 ```
 
 ---
 
 ## Files Delivered
 
-| # | File | Object Type | Purpose |
-|---|------|------------|---------|
-| 1 | `zstudentss.tabl.cds` | CDS Table | Student master data table |
-| 2 | `zstudentss_d.tabl.cds` | CDS Table | Draft table for draft-enabled transactions |
-| 3 | `zi_student.ddls.cds` | CDS View Entity | Interface (BO) view on student table |
-| 4 | `zi_student.bdef.cds` | Behavior Definition | Managed CRUD + draft + validations |
-| 5 | `zbp_i_student.clas.abap` | ABAP Class | Behavior implementation (global class) |
-| 6 | `zbp_i_student.clas.locals_imp.abap` | ABAP Local Class | Validation logic (phone, name, regno) |
-| 7 | `zc_student.ddls.cds` | CDS View Entity | Projection view for UI consumption |
-| 8 | `zc_student.bdef.cds` | Behavior Projection | Exposes CRUD + draft to projection |
-| 9 | `zc_student.ddls.metadataext` | Metadata Extension | Fiori Elements UI annotations |
-| 10 | `zui_student.srvd.cds` | Service Definition | Exposes projection as OData service |
-| 11 | `zui_student_o4.srvb.json` | Reference | Service Binding config (create in ADT) |
+### Database Tables (src/)
+| File | Purpose |
+|------|---------|
+| `zstudentss.tabl.cds` | Student master table |
+| `zstudentss_d.tabl.cds` | Student draft table |
+| `zdepartments.tabl.cds` | Department master table |
+| `zcourses.tabl.cds` | Course master table |
+| `zcourses_d.tabl.cds` | Course draft table |
+| `zaddresses.tabl.cds` | Address table |
+| `zaddresses_d.tabl.cds` | Address draft table |
+| `zenrollments.tabl.cds` | Enrollment table |
+| `zenrollments_d.tabl.cds` | Enrollment draft table |
+
+### CDS Views & Behaviors (src/)
+| File | Purpose |
+|------|---------|
+| `zi_student.ddls.cds` | Student interface view (with associations) |
+| `zi_department.ddls.cds` | Department interface view |
+| `zi_course.ddls.cds` | Course interface view |
+| `zi_address.ddls.cds` | Address interface view |
+| `zi_enrollment.ddls.cds` | Enrollment interface view |
+| `zc_student.ddls.cds` | Student projection view |
+| `zc_department.ddls.cds` | Department projection view |
+| `zc_course.ddls.cds` | Course projection view |
+| `zc_address.ddls.cds` | Address projection view |
+| `zc_enrollment.ddls.cds` | Enrollment projection view |
+| `zi_student.bdef.cds` | Behavior definition (Student + Address + Enrollment) |
+| `zc_student.bdef.cds` | Behavior projection |
+| `zc_student.ddls.metadataext` | Fiori UI metadata extension |
+| `zbp_i_student.clas.abap` | Behavior implementation class |
+| `zbp_i_student.clas.locals_imp.abap` | Validation handlers |
+| `zui_student.srvd.cds` | Service definition |
+| `zui_student_o4.srvb.json` | Service binding reference |
+
+### CAP Application
+| File | Purpose |
+|------|---------|
+| `db/schema.cds` | Data model (5 entities with enums) |
+| `db/data/seed-data.cds` | Sample data (5 depts, 10 courses, 3 students) |
+| `srv/student-service.cds` | Service with criticality calculations |
+| `srv/student-service.js` | Validation handlers for all entities |
+| `app/students/annotations.cds` | Full UI annotations for all entities |
+| `app/students/webapp/manifest.json` | App routing (students, addresses, enrollments) |
 
 ---
 
-## Step-by-Step Creation in ADT (Eclipse)
-
-### Prerequisites
-- SAP BTP ABAP Environment instance provisioned
-- Eclipse with ADT plugin installed
-- ABAP Cloud project created and connected
-
-### Step 1: Create the Database Table
-1. Right-click your package → **New → Other ABAP Repository Object → Dictionary → Database Table**
-2. Name: `ZSTUDENTSS`
-3. Paste the content from `zstudentss.tabl.cds`
-4. **Activate** (Ctrl+F3)
-
-### Step 2: Create the Draft Table
-1. Same as Step 1, name: `ZSTUDENTSS_D`
-2. Paste content from `zstudentss_d.tabl.cds`
-3. **Activate**
-
-### Step 3: Create the Interface CDS View Entity
-1. Right-click package → **New → Other ABAP Repository Object → Core Data Services → Data Definition**
-2. Name: `ZI_STUDENT`
-3. Choose template: **Define Root View Entity**
-4. Replace content with `zi_student.ddls.cds`
-5. **Activate**
-
-### Step 4: Create the Behavior Definition
-1. Right-click `ZI_STUDENT` → **New Behavior Definition**
-2. Implementation Type: **Managed**
-3. Replace content with `zi_student.bdef.cds`
-4. **Activate**
-
-### Step 5: Create the Behavior Implementation Class
-1. Place cursor on `zbp_i_student` in the behavior definition → Quick Fix (Ctrl+1) → **Create behavior implementation class**
-2. Or manually: New → ABAP Class → `ZBP_I_STUDENT`
-3. Paste the global class from `zbp_i_student.clas.abap`
-4. Paste the local handler class from `zbp_i_student.clas.locals_imp.abap` into the **Local Types** tab
-5. **Activate**
-
-### Step 6: Create the Projection CDS View Entity
-1. New → Data Definition → Name: `ZC_STUDENT`
-2. Choose template: **Define Projection View**
-3. Replace content with `zc_student.ddls.cds`
-4. **Activate**
-
-### Step 7: Create the Behavior Projection
-1. Right-click `ZC_STUDENT` → **New Behavior Definition**
-2. Replace content with `zc_student.bdef.cds`
-3. **Activate**
-
-### Step 8: Create the Metadata Extension
-1. Right-click `ZC_STUDENT` → **New Metadata Extension**
-2. Name: `ZC_STUDENT` (same name, different object type)
-3. Replace content with `zc_student.ddls.metadataext`
-4. **Activate**
-
-### Step 9: Create the Service Definition
-1. Right-click package → **New → Other ABAP Repository Object → Business Services → Service Definition**
-2. Name: `ZUI_STUDENT`
-3. Paste content from `zui_student.srvd.cds`
-4. **Activate**
-
-### Step 10: Create the Service Binding
-1. Right-click package → **New → Other ABAP Repository Object → Business Services → Service Binding**
-2. Name: `ZUI_STUDENT_O4`
-3. Binding Type: **OData V4 - UI**
-4. Service Definition: `ZUI_STUDENT`
-5. **Activate**
-6. Click **Publish** in the Service Binding editor
-
-### Step 11: Preview the Fiori App
-1. In the Service Binding editor, select entity set `Student`
-2. Click **Preview** button
-3. The Fiori Elements List Report opens in the browser
-
----
-
-## Features Included
+## Features
 
 ### CRUD Operations
-- **Create**: Add new student records via the Fiori "Create" button
-- **Read**: List Report displays all students with sorting/filtering
-- **Update**: Click a student → Object Page → Edit
-- **Delete**: Select rows → Delete button
+- Full Create, Read, Update, Delete on **Students** and **Courses**
+- Draft handling with Edit / Activate / Discard / Resume / Prepare
+- Inline creation of **Addresses** and **Enrollments** from Student Object Page
+- Read-only **Departments** entity (pre-seeded, used as value help)
 
-### Draft Handling
-- Users can start editing and save as draft without committing
-- Draft data stored in `ZSTUDENTSS_D`
-- Activate action commits the draft to the active table
+### Validations
+| Field | Entity | Rule |
+|-------|--------|------|
+| Name | Student | Required |
+| Registration No | Student | Required |
+| Email | Student | Valid email format (user@domain.ext) |
+| Phone | Student | Digits only |
+| Status | Student | A (Active), I (Inactive), G (Graduated) |
+| Course Title | Course | Required |
+| Course Code | Course | Required |
+| Credits | Course | Between 1 and 10 |
+| Enrollment Date | Enrollment | Required |
+| Grade | Enrollment | A, A+, B+, B, C+, C, D, or F |
+| Enrollment Status | Enrollment | E (Enrolled), C (Completed), D (Dropped) |
+| Address Type | Address | HOME, MAIL, or TEMP |
 
-### Validations (triggered on save / Prepare)
-| Validation | Rule |
-|-----------|------|
-| `ValidatePhone` | Phone must contain only digits (regex `^\d+$`) |
-| `ValidateName` | Name is mandatory |
-| `ValidateRegno` | Registration number is mandatory |
+### UI Features
+- **Status Criticality Coloring**: Active=Green, Inactive=Red, Graduated=Yellow
+- **Enrollment Status Coloring**: Enrolled=Yellow, Completed=Green, Dropped=Red
+- **Value Help Dropdowns**: Department and Course pickers with details
+- **Fuzzy Search**: On name, registration number, email, course title
+- **Filter Bar**: Filter by name, reg no, status, department
+- **Object Page Sections**: Student Info, Department, Addresses table, Enrollments table, Admin Data
+- **Sub-Object Pages**: Navigate into Address or Enrollment for detail editing
+- **Course Object Page**: Shows enrolled students in a table
 
-### Search & Filter
-- `@Search.searchable` on projection view enables global search
-- `@Search.defaultSearchElement` on Name and Regno for fuzzy search
-- `@UI.selectionField` on Name and Regno for filter bar fields
+### Custom Actions
+- `changeStudentStatus` — Change a student's status programmatically
 
-### Fiori UI Annotations
-- List Report columns: Name, Regno, Phone
-- Object Page with two facets: Student Information + Administrative Data
+---
+
+## Running the Application
+
+```bash
+npm install          # Install dependencies
+cds watch            # Start with live reload (http://localhost:4004)
+```
+
+### URLs
+| URL | Description |
+|-----|-------------|
+| http://localhost:4004/students/webapp/index.html | Student Management UI |
+| http://localhost:4004/student/ | OData service endpoint |
+| http://localhost:4004/student/$metadata | OData metadata |
+| http://localhost:4004/student/Students | Students API |
+| http://localhost:4004/student/Courses | Courses API |
+| http://localhost:4004/student/Departments | Departments API |
+
+### Sample Data
+Pre-loaded via `db/data/seed-data.cds`:
+- **5 Departments**: CS, ME, EE, MBA, MATH
+- **10 Courses**: Across all departments (1–4 credits each)
+- **3 Students**: With addresses and enrollments pre-filled
+
+---
+
+## ABAP RAP Implementation in ADT
+
+For deployment to SAP BTP ABAP Environment, create objects in this order in ADT (Eclipse):
+
+1. **Database Tables**: `ZSTUDENTSS`, `ZSTUDENTSS_D`, `ZDEPARTMENTS`, `ZCOURSES`, `ZCOURSES_D`, `ZADDRESSES`, `ZADDRESSES_D`, `ZENROLLMENTS`, `ZENROLLMENTS_D`
+2. **Interface CDS Views**: `ZI_DEPARTMENT`, `ZI_COURSE`, `ZI_STUDENT`, `ZI_ADDRESS`, `ZI_ENROLLMENT`
+3. **Behavior Definition**: `ZI_STUDENT` (includes Address + Enrollment child behaviors)
+4. **Behavior Implementation**: `ZBP_I_STUDENT` (global + local handler classes)
+5. **Projection Views**: `ZC_DEPARTMENT`, `ZC_COURSE`, `ZC_STUDENT`, `ZC_ADDRESS`, `ZC_ENROLLMENT`
+6. **Behavior Projection**: `ZC_STUDENT` (includes child projections)
+7. **Metadata Extension**: `ZC_STUDENT`
+8. **Service Definition**: `ZUI_STUDENT` (exposes all projection views)
+9. **Service Binding**: `ZUI_STUDENT_O4` (OData V4 UI, then Publish)
+
+---
+
+## Troubleshooting
+
+| Issue | Solution |
+|-------|---------|
+| `cds watch` fails | Run `npm install` first |
+| No data on first load | Seed data loads automatically from `db/data/seed-data.cds` |
+| Draft errors | Clear browser cache or use incognito mode |
+| Port 4004 in use | `set PORT=4005` then `cds watch` |
+| Department dropdown empty | Check that seed data loaded — try `http://localhost:4004/student/Departments` |
 - Header shows student Name and Regno
 - Administrative fields (CreatedBy, CreatedAt, etc.) in a separate section
 

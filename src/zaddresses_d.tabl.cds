@@ -1,19 +1,19 @@
-@EndUserText.label : 'Draft Table for Student'
+@EndUserText.label : 'Address Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zstudentss_d {
+define table zaddresses_d {
 
   key client         : abap.clnt not null;
-  key sid            : sysuuid_x16 not null;
-  name               : abap.char(50);
-  regno              : abap.char(20);
-  email              : abap.char(100);
-  phone              : abap.char(15);
-  date_of_birth      : abap.dats;
-  status             : abap.char(1);
-  department_id      : sysuuid_x16;
+  key address_id     : sysuuid_x16 not null;
+  student_id         : sysuuid_x16 not null;
+  address_type       : abap.char(10);
+  street             : abap.char(200);
+  city               : abap.char(100);
+  state              : abap.char(100);
+  postal_code        : abap.char(20);
+  country            : abap.char(50);
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

@@ -1,0 +1,6 @@
+ID,code,name,description,headOfDept
+d1a0e1f0-0001-4000-8000-000000000001,CS,Computer Science,Study of computation and information,Dr. Alan Turing
+d1a0e1f0-0002-4000-8000-000000000002,ME,Mechanical Engineering,Design and manufacturing of machines,Dr. James Watt
+d1a0e1f0-0003-4000-8000-000000000003,EE,Electrical Engineering,Study of electricity and electronics,Dr. Nikola Tesla
+d1a0e1f0-0004-4000-8000-000000000004,MBA,Business Administration,"Management, finance and business strategy",Dr. Peter Drucker
+d1a0e1f0-0005-4000-8000-000000000005,MATH,Mathematics,Pure and applied mathematics,Dr. Carl Gauss

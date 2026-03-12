@@ -16,11 +16,22 @@ define root view entity ZC_STUDENT
       @Search.fuzzinessThreshold: 0.8
       Regno,
 
+      @Search.defaultSearchElement: true
+      Email,
+
       Phone,
+      DateOfBirth,
+      Status,
+      DepartmentId,
 
       CreatedBy,
       CreatedAt,
       LastChangedBy,
       LastChangedAt,
-      LocalLastChanged
+      LocalLastChanged,
+
+      /* Associations */
+      _Department,
+      _Address   : redirected to composition child ZC_ADDRESS,
+      _Enrollment: redirected to composition child ZC_ENROLLMENT
 }

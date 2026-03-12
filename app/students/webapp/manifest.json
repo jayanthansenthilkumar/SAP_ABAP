@@ -53,6 +53,16 @@
                     "pattern": "Students({key}):?query:",
                     "name": "StudentsObjectPage",
                     "target": "StudentsObjectPage"
+                },
+                {
+                    "pattern": "Students({key})/addresses({key2}):?query:",
+                    "name": "AddressObjectPage",
+                    "target": "AddressObjectPage"
+                },
+                {
+                    "pattern": "Students({key})/enrollments({key2}):?query:",
+                    "name": "EnrollmentObjectPage",
+                    "target": "EnrollmentObjectPage"
                 }
             ],
             "targets": {
@@ -82,6 +92,40 @@
                     "options": {
                         "settings": {
                             "contextPath": "/Students",
+                            "editableHeaderContent": false,
+                            "navigation": {
+                                "addresses": {
+                                    "detail": {
+                                        "route": "AddressObjectPage"
+                                    }
+                                },
+                                "enrollments": {
+                                    "detail": {
+                                        "route": "EnrollmentObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "AddressObjectPage": {
+                    "type": "Component",
+                    "id": "AddressObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Students/addresses",
+                            "editableHeaderContent": false
+                        }
+                    }
+                },
+                "EnrollmentObjectPage": {
+                    "type": "Component",
+                    "id": "EnrollmentObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Students/enrollments",
                             "editableHeaderContent": false
                         }
                     }

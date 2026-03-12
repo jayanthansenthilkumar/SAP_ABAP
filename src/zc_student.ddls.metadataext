@@ -17,12 +17,36 @@ annotate entity ZC_STUDENT with
       position: 10
     },
     {
+      id: 'DeptInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'DeptData',
+      label: 'Department',
+      position: 15
+    },
+    {
+      id: 'Addresses',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Addresses',
+      position: 20,
+      targetElement: '_Address'
+    },
+    {
+      id: 'Enrollments',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Course Enrollments',
+      position: 25,
+      targetElement: '_Enrollment'
+    },
+    {
       id: 'AdminInfo',
       purpose: #STANDARD,
       type: #FIELDGROUP_REFERENCE,
       targetQualifier: 'AdminData',
       label: 'Administrative Data',
-      position: 20
+      position: 30
     }
   ]
 
@@ -46,11 +70,40 @@ annotate entity ZC_STUDENT with
   Regno;
 
   @UI: {
+    lineItem:       [{ position: 25, importance: #MEDIUM }],
+    identification: [{ position: 25 }]
+  }
+  @EndUserText.label: 'Email'
+  Email;
+
+  @UI: {
     lineItem:       [{ position: 30, importance: #MEDIUM }],
     identification: [{ position: 30 }]
   }
   @EndUserText.label: 'Phone Number'
   Phone;
+
+  @UI: {
+    identification: [{ position: 35 }]
+  }
+  @EndUserText.label: 'Date of Birth'
+  DateOfBirth;
+
+  @UI: {
+    lineItem:       [{ position: 40, importance: #HIGH, criticality: 'Status' }],
+    identification: [{ position: 40 }],
+    selectionField: [{ position: 30 }]
+  }
+  @EndUserText.label: 'Status'
+  Status;
+
+  @UI: {
+    lineItem:       [{ position: 45, importance: #MEDIUM }],
+    fieldGroup:     [{ qualifier: 'DeptData', position: 10 }],
+    selectionField: [{ position: 40 }]
+  }
+  @EndUserText.label: 'Department'
+  DepartmentId;
 
   @UI: {
     fieldGroup: [{ qualifier: 'AdminData', position: 10 }]

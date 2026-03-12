@@ -1,19 +1,17 @@
-@EndUserText.label : 'Draft Table for Student'
+@EndUserText.label : 'Enrollment Draft Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zstudentss_d {
+define table zenrollments_d {
 
   key client         : abap.clnt not null;
-  key sid            : sysuuid_x16 not null;
-  name               : abap.char(50);
-  regno              : abap.char(20);
-  email              : abap.char(100);
-  phone              : abap.char(15);
-  date_of_birth      : abap.dats;
+  key enrollment_id  : sysuuid_x16 not null;
+  student_id         : sysuuid_x16 not null;
+  course_id          : sysuuid_x16;
+  enrollment_date    : abap.dats;
+  grade              : abap.char(2);
   status             : abap.char(1);
-  department_id      : sysuuid_x16;
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

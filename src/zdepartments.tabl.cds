@@ -1,19 +1,16 @@
-@EndUserText.label : 'Student Master Table'
+@EndUserText.label : 'Department Master Table'
 @AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
 @AbapCatalog.deliveryClass : #A
 @AbapCatalog.dataMaintenance : #RESTRICTED
-define table zstudentss {
+define table zdepartments {
 
   key client         : abap.clnt not null;
-  key sid            : sysuuid_x16 not null;
-  name               : abap.char(50);
-  regno              : abap.char(20);
-  email              : abap.char(100);
-  phone              : abap.char(15);
-  date_of_birth      : abap.dats;
-  status             : abap.char(1);
-  department_id      : sysuuid_x16;
+  key dept_id        : sysuuid_x16 not null;
+  code               : abap.char(10);
+  name               : abap.char(100);
+  description        : abap.char(500);
+  head_of_dept       : abap.char(100);
   created_by         : syuname;
   created_at         : timestampl;
   last_changed_by    : syuname;

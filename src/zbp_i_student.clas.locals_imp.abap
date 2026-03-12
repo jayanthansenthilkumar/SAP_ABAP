@@ -14,6 +14,9 @@ CLASS lhc_student DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS validateregno FOR VALIDATE ON SAVE
       IMPORTING keys FOR Student~ValidateRegno.
 
+    METHODS validateemail FOR VALIDATE ON SAVE
+      IMPORTING keys FOR Student~ValidateEmail.
+
 ENDCLASS.
 
 CLASS lhc_student IMPLEMENTATION.
@@ -98,6 +101,32 @@ CLASS lhc_student IMPLEMENTATION.
                         text     = 'Registration number is required.' )
           %element-Regno = if_abap_behv=>mk-on
         ) TO reported-student.
+      ENDIF.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD validateemail.
+    READ ENTITIES OF zi_student IN LOCAL MODE
+      ENTITY Student
+        FIELDS ( Email )
+        WITH CORRESPONDING #( keys )
+      RESULT DATA(students).
+
+    LOOP AT students ASSIGNING FIELD-SYMBOL(<student>).
+      IF <student>-Email IS NOT INITIAL.
+        " Basic email format check: must contain @ and .
+        IF NOT matches( val = <student>-Email regex = '^[^\s@]+@[^\s@]+\.[^\s@]+$' ).
+          APPEND VALUE #(
+            %tky = <student>-%tky
+          ) TO failed-student.
+          APPEND VALUE #(
+            %tky     = <student>-%tky
+            %msg     = new_message_with_text(
+                          severity = if_abap_behv_message=>severity-error
+                          text     = 'Please enter a valid email address.' )
+            %element-Email = if_abap_behv=>mk-on
+          ) TO reported-student.
+        ENDIF.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
