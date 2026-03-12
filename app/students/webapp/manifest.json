@@ -1,0 +1,108 @@
+{
+    "_version": "1.65.0",
+    "sap.app": {
+        "id": "students",
+        "type": "application",
+        "title": "Student Management",
+        "description": "Manage Student Records",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/student/",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "4.0"
+                }
+            }
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.120.0",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.fe.core": {},
+                "sap.fe.macros": {},
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "StudentsList",
+                    "target": "StudentsList"
+                },
+                {
+                    "pattern": "Students({key}):?query:",
+                    "name": "StudentsObjectPage",
+                    "target": "StudentsObjectPage"
+                }
+            ],
+            "targets": {
+                "StudentsList": {
+                    "type": "Component",
+                    "id": "StudentsList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Students",
+                            "variantManagement": "Page",
+                            "initialLoad": "Enabled",
+                            "navigation": {
+                                "Students": {
+                                    "detail": {
+                                        "route": "StudentsObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "StudentsObjectPage": {
+                    "type": "Component",
+                    "id": "StudentsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "contextPath": "/Students",
+                            "editableHeaderContent": false
+                        }
+                    }
+                }
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
+    }
+}

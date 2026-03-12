@@ -1,0 +1,10 @@
+{
+  "serviceBinding": {
+    "name": "ZUI_STUDENT_O4",
+    "description": "Student Management OData V4 Service Binding",
+    "bindingType": "ODATA_V4_UI",
+    "serviceDefinition": "ZUI_STUDENT",
+    "serviceVersion": "0001"
+  },
+  "note": "Service Bindings must be created via ADT (Eclipse). Right-click the package → New → Service Binding. Select binding type 'OData V4 - UI' and reference service definition ZUI_STUDENT. After creation, click 'Activate' then 'Publish' in the Service Binding editor."
+}

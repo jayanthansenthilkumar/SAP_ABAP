@@ -1,0 +1,79 @@
+@Metadata.layer: #CUSTOMER
+@UI.headerInfo: {
+  typeName: 'Student',
+  typeNamePlural: 'Students',
+  title: { type: #STANDARD, value: 'Name' },
+  description: { type: #STANDARD, value: 'Regno' }
+}
+annotate entity ZC_STUDENT with
+{
+
+  @UI.facet: [
+    {
+      id: 'StudentInfo',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Student Information',
+      position: 10
+    },
+    {
+      id: 'AdminInfo',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      targetQualifier: 'AdminData',
+      label: 'Administrative Data',
+      position: 20
+    }
+  ]
+
+  @UI.hidden: true
+  Sid;
+
+  @UI: {
+    lineItem:       [{ position: 10, importance: #HIGH }],
+    identification: [{ position: 10 }],
+    selectionField: [{ position: 10 }]
+  }
+  @EndUserText.label: 'Student Name'
+  Name;
+
+  @UI: {
+    lineItem:       [{ position: 20, importance: #HIGH }],
+    identification: [{ position: 20 }],
+    selectionField: [{ position: 20 }]
+  }
+  @EndUserText.label: 'Registration Number'
+  Regno;
+
+  @UI: {
+    lineItem:       [{ position: 30, importance: #MEDIUM }],
+    identification: [{ position: 30 }]
+  }
+  @EndUserText.label: 'Phone Number'
+  Phone;
+
+  @UI: {
+    fieldGroup: [{ qualifier: 'AdminData', position: 10 }]
+  }
+  @EndUserText.label: 'Created By'
+  CreatedBy;
+
+  @UI: {
+    fieldGroup: [{ qualifier: 'AdminData', position: 20 }]
+  }
+  @EndUserText.label: 'Created At'
+  CreatedAt;
+
+  @UI: {
+    fieldGroup: [{ qualifier: 'AdminData', position: 30 }]
+  }
+  @EndUserText.label: 'Last Changed By'
+  LastChangedBy;
+
+  @UI: {
+    fieldGroup: [{ qualifier: 'AdminData', position: 40 }]
+  }
+  @EndUserText.label: 'Last Changed At'
+  LastChangedAt;
+
+}
